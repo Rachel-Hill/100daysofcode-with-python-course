@@ -1,3 +1,5 @@
+
+
 us_state_abbrev = {'Alabama': 'AL', 'Alaska': 'AK', 'Arizona': 'AZ',
                    'Arkansas': 'AR', 'California': 'CA', 'Colorado': 'CO',
                    'Connecticut': 'CT', 'Delaware': 'DE', 'Florida': 'FL',
@@ -35,11 +37,9 @@ NOT_FOUND = 'N/A'
 def get_every_nth_state(states=states, n=10):
     """Return a list with every nth item (default argument n=10, so every
        10th item) of the states list above (remember: lists keep order)"""
-    results = []
-    for i in range(len(states)):
-        if (i + 1) % n == 0:
-            results.append(states[i])
-    return results
+    for i, state in enumerate(states, 1):
+        if i % n == 0:
+            yield state
 
 
 def get_state_abbrev(state_name, us_state_abbrev=us_state_abbrev):
@@ -56,18 +56,7 @@ def get_longest_state(data):
     """Receives data, which can be the us_state_abbrev dict or the states
        list (see above). It returns the longest state measured by the length
        of the string"""
-    data_list = []
-    if type(data) == dict:
-        for key in data.keys():
-            data_list.append(key)
-    else:
-        data_list = data
-
-    longest = ''
-    for state in data_list:
-        if len(state) > len(longest):
-            longest = state
-    return longest
+    return max(data,key=len)
 
 
 def combine_state_names_and_abbreviations(us_state_abbrev=us_state_abbrev,
@@ -76,18 +65,4 @@ def combine_state_names_and_abbreviations(us_state_abbrev=us_state_abbrev,
        the us_state_abbrev dict, and the last 10 states from the states
        list (see above) and combine them into a new list without losing
        alphabetical order"""
-    results = []
-    abbrev_list = []
-    for value in us_state_abbrev.values():
-        abbrev_list.append(value)
-
-    abbrev_list.sort()
-
-    for i in range(10):
-        results.append(abbrev_list[i])
-
-    states.sort()
-    ten_states = states[-10:]
-    for i in range(10):
-        results.append(ten_states[i])
-    return results
+    return sorted(us_state_abbrev.values())[:10] + sorted(states)[-10:]
