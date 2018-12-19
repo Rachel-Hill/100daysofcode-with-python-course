@@ -27,14 +27,16 @@ def print_header():
     print()
 
 def build_the_three_rolls():
-    rock = Roll("Rock","Scissors")
-    paper = Roll("Paper","Rock")
-    scissors = Roll("Scissors","Paper")
+    rock = Roll('Rock')
+    paper = Roll('Paper')
+    scissors = Roll('Scissors')
+    valid_rolls = ['Rock','Paper','Scissors']
 
 def game_loop(player1, player2, rolls):
+    round1 = Roll()
     count = 1
     while count < 3:
-        p2_roll = random.choices("Rock","Paper","Scissors")
+        p2_roll = roll.
         p1_roll = input("{}, roll: 1..2..3..".format(player1.name))
 
         outcome = p1_roll.can_defeat(p2_roll)
